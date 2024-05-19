@@ -2,26 +2,10 @@ from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine, func
-import os
-from dotenv import load_dotenv
 from flask_login import UserMixin
 
-load_dotenv()
 
-HOST = 'localhost'
-DATABASE = 'note_app'
-USER = os.getenv('DB_USER')
-PASSWORD = os.getenv('DB_PASSWORD')
-
-
-def create_database_url(host, database, user, password):
-    url = f'postgresql+psycopg2://{user}:{password}@{host}/{database}'
-    return url
-
-
-database_url = create_database_url(HOST, DATABASE, USER, PASSWORD)
-engine = create_engine(database_url, echo=True)
-
+engine = create_engine('sqlite:///note_app.db', echo=True)
 Base = declarative_base()
 
 Session = sessionmaker(bind=engine)
